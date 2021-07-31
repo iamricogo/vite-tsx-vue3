@@ -8,6 +8,14 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview"
   },
+  "lint-staged": {
+    "src/**/*.{vue,js,jsx,ts,tsx}": [
+      "eslint --fix ./src --ext .vue,.js,.ts,.jsx,.tsx"
+    ],
+    "**/*.{json,css,less,scss,html,js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "vue": "^3.0.5"
   },

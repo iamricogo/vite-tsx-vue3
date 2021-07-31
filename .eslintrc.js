@@ -3,7 +3,7 @@
  * @Date: 2021-07-31 17:17:00
  * @LastEditors: Rico
  * @LastEditTime: 2021-07-31 17:20:39
- * @Description: 
+ * @Description:
  */
 module.exports = {
   parser: 'vue-eslint-parser',
