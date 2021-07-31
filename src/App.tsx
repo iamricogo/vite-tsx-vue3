@@ -2,11 +2,11 @@
  * @Author: Rico
  * @Date: 2021-07-31 11:32:44
  * @LastEditors: Rico
- * @LastEditTime: 2021-07-31 17:55:33
+ * @LastEditTime: 2021-07-31 18:04:57
  * @Description:
  */
 import { defineComponent } from 'vue'
-import logo from './assets/logo.png'
+import logo from './assets/logo.png' 
 
 export default defineComponent({
   name: 'App',
