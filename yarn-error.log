@@ -1,0 +1,44 @@
+Arguments: 
+  D:\Program Files\nodejs\node.exe D:\Users\rico\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @vitejs/plugin-vue-jsx -D
+
+PATH: 
+  D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\bin;D:\Users\rico\bin;D:\Users\rico\AppData\Local\Programs\Python\Python39\Scripts;D:\Users\rico\AppData\Local\Programs\Python\Python39;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NGX;D:\Program Files\Git\cmd;D:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;D:\Program Files (x86)\NetSarang\Xftp 7;D:\Users\rico\AppData\Local\Programs\Python\Python39\Scripts;D:\Users\rico\AppData\Local\Programs\Python\Python39;D:\Users\rico\AppData\Local\Microsoft\WindowsApps;D:\Users\rico\AppData\Roaming\npm;D:\Users\rico\AppData\Local\Programs\Microsoft VS Code\bin;D:\Users\rico\AppData\Local\Programs\Fiddler
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.17.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'D:\Users\rico\Desktop\vs-code\my-vue-app\node_modules\esbuild\esbuild.exe'
+
+npm manifest: 
+  {
+    "name": "my-vue-app",
+    "version": "0.0.0",
+    "scripts": {
+      "dev": "vite",
+      "build": "vue-tsc --noEmit && vite build",
+      "serve": "vite preview"
+    },
+    "dependencies": {
+      "vue": "^3.0.5"
+    },
+    "devDependencies": {
+      "@vitejs/plugin-vue": "^1.3.0",
+      "@vue/compiler-sfc": "^3.0.5",
+      "typescript": "^4.3.2",
+      "vite": "^2.4.4",
+      "vue-tsc": "^0.2.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

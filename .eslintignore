@@ -1,0 +1,6 @@
+dist/*
+build/*
+config/*
+mock/*
+static/libs/*
+styleguide/dist/*
