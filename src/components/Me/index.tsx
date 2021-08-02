@@ -2,7 +2,7 @@
  * @Author: Rico
  * @Date: 2021-07-31 19:04:07
  * @LastEditors: Rico
- * @LastEditTime: 2021-07-31 23:39:10
+ * @LastEditTime: 2021-08-02 11:58:49
  * @Description:
  */
 /*
@@ -26,6 +26,8 @@ export default defineComponent({
       required: true
     }
   },
+
+  emits: ['tap'],
 
   setup: (props: MeProps, { emit, slots, attrs }) => {
     console.log({ props, emit, slots, attrs })

@@ -1,68 +1,71 @@
 /*
  * @Author: Rico
- * @Date: 2021-07-31 11:32:44
+ * @Date: 2021-07-31 18:57:20
  * @LastEditors: Rico
- * @LastEditTime: 2021-08-01 00:11:43
+ * @LastEditTime: 2021-08-02 13:30:43
  * @Description:
  */
-import { defineComponent, ref, shallowRef } from 'vue'
-import Me, { MeProps } from '@/components/Me'
-import Others, { OthersProps } from '@/components/Others'
-interface JsxData extends MeProps, OthersProps {
-  onTap?: any
-}
-interface ChildJsxData {
-  others?: JsxData
-  slots?: any
-}
+import { defineComponent, ref, reactive } from 'vue'
+import Me from '@/components/Me'
+import Others from '@/components/Others'
+import { Tabs as VTabs, Tab as VTabPane } from 'vant'
+import { Tabs as ATabs, TabPane as ATabPane, Tag as ATag } from 'ant-design-vue'
+import { ElTabs, ElTabPane } from 'element-plus'
 
 export default defineComponent({
   name: 'App',
   setup: () => {
-    const coms = {
-      Me,
-      Others
-    }
-    const active: any = shallowRef(Me)
+    const active = ref('Me')
 
-    const jsxDataMap = ref(new WeakMap<any, ChildJsxData>()).value
-
-    jsxDataMap
-      .set(Me, {
-        others: {
+    const coms = [
+      {
+        com: Me,
+        reset: reactive({
           title: 'Me',
-          onTap: (data: any) => {
-            jsxDataMap.get(Me)!.others!.title = String(data)
+          onTap: () => {
+            console.log(1)
           }
-        },
-
-        slots: {
-          title: () => <span>我是作用域插槽</span>
-        }
-      })
-      .set(Others, {
-        others: {
+        }),
+        slots: reactive({
+          title: () => <span>我是插槽</span>
+        })
+      },
+      {
+        com: Others,
+        reset: reactive({
           title: 'Others'
-        }
-      })
+        })
+      }
+    ]
 
     return () => (
       <div>
-        <active.value
-          v-slots={jsxDataMap.get(active.value)?.slots}
-          {...jsxDataMap.get(active.value)?.others}
-        />
-        <ul>
-          {Object.entries(coms).map(([key, value]) => (
-            <li
-              onClick={() => {
-                active.value = value
-              }}
-            >
-              {key}
-            </li>
+        <ATag color="lime">vant</ATag>
+        <VTabs type="line" v-model={[active.value, 'active']}>
+          {coms.map((item) => (
+            <VTabPane title={item.reset.title} name={item.reset.title}>
+              <item.com v-slots={item.slots} {...item.reset} />
+            </VTabPane>
           ))}
-        </ul>
+        </VTabs>
+
+        <ATag color="pink">ant-design-vue</ATag>
+        <ATabs type="card" v-model={[active.value, 'activeKey']}>
+          {coms.map((item) => (
+            <ATabPane tab={item.reset.title} key={item.reset.title}>
+              <item.com v-slots={item.slots} {...item.reset} />
+            </ATabPane>
+          ))}
+        </ATabs>
+
+        <ATag color="purple">element-plus</ATag>
+        <ElTabs type="card" v-model={[active.value, 'model-value']}>
+          {coms.map((item) => (
+            <ElTabPane label={item.reset.title} name={item.reset.title}>
+              <item.com v-slots={item.slots} {...item.reset} />
+            </ElTabPane>
+          ))}
+        </ElTabs>
       </div>
     )
   }
