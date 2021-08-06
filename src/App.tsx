@@ -1,72 +1,49 @@
-/*
- * @Author: Rico
- * @Date: 2021-07-31 18:57:20
- * @LastEditors: Rico
- * @LastEditTime: 2021-08-02 13:30:43
- * @Description:
- */
-import { defineComponent, ref, reactive } from 'vue'
-import Me from '@/components/Me'
-import Others from '@/components/Others'
-import { Tabs as VTabs, Tab as VTabPane } from 'vant'
-import { Tabs as ATabs, TabPane as ATabPane, Tag as ATag } from 'ant-design-vue'
-import { ElTabs, ElTabPane } from 'element-plus'
-
+import { defineComponent, ref, reactive, Slots } from 'vue'
+import Me, { IMeProps } from '@/views/me'
+import Others, { IOthersProps } from '@/views/others'
+import { Tabs } from 'ant-design-vue'
+interface ComData {
+  com: typeof Me | typeof Others
+  props: IMeProps | IOthersProps
+  slots?: Slots
+}
+type Coms = {
+  [key in 'Me' | 'Others']: ComData
+}
 export default defineComponent({
   name: 'App',
   setup: () => {
-    const active = ref('Me')
-
-    const coms = [
-      {
+    const active = ref<keyof Coms>('Me')
+    const coms: Coms = {
+      Me: {
         com: Me,
-        reset: reactive({
+        props: reactive<IMeProps>({
           title: 'Me',
-          onTap: () => {
-            console.log(1)
+          onTap: (v: number) => {
+            console.log(v)
           }
         }),
-        slots: reactive({
-          title: () => <span>我是插槽</span>
+        slots: reactive<Slots>({
+          title: () => [<span>我是插槽</span>]
         })
       },
-      {
+      Others: {
         com: Others,
-        reset: reactive({
+        props: reactive<IOthersProps>({
           title: 'Others'
         })
       }
-    ]
-
+    }
     return () => (
-      <div>
-        <ATag color="lime">vant</ATag>
-        <VTabs type="line" v-model={[active.value, 'active']}>
-          {coms.map((item) => (
-            <VTabPane title={item.reset.title} name={item.reset.title}>
-              <item.com v-slots={item.slots} {...item.reset} />
-            </VTabPane>
+      <>
+        <Tabs type="card" v-model={[active.value, 'activeKey']}>
+          {Object.entries(coms).map(([key, { props, slots, com: Com }]) => (
+            <Tabs.TabPane tab={key} key={key}>
+              <Com v-slots={slots} {...props} />
+            </Tabs.TabPane>
           ))}
-        </VTabs>
-
-        <ATag color="pink">ant-design-vue</ATag>
-        <ATabs type="card" v-model={[active.value, 'activeKey']}>
-          {coms.map((item) => (
-            <ATabPane tab={item.reset.title} key={item.reset.title}>
-              <item.com v-slots={item.slots} {...item.reset} />
-            </ATabPane>
-          ))}
-        </ATabs>
-
-        <ATag color="purple">element-plus</ATag>
-        <ElTabs type="card" v-model={[active.value, 'model-value']}>
-          {coms.map((item) => (
-            <ElTabPane label={item.reset.title} name={item.reset.title}>
-              <item.com v-slots={item.slots} {...item.reset} />
-            </ElTabPane>
-          ))}
-        </ElTabs>
-      </div>
+        </Tabs>
+      </>
     )
   }
 })

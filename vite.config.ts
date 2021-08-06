@@ -10,6 +10,7 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx' //支持jsx写法
 import eslintPlugin from 'vite-plugin-eslint' //保存时执行eslint
+import viteStylelint from '@amatlash/vite-plugin-stylelint'
 import styleImport from 'vite-plugin-style-import' //组件按需引入
 
 export default defineConfig({
@@ -24,6 +25,7 @@ export default defineConfig({
     vue(),
     vueJsx({ transformOn: true, enableObjectSlots: true }),
     eslintPlugin({ fix: true }),
+    viteStylelint(),
     styleImport({
       libs: [
         {
