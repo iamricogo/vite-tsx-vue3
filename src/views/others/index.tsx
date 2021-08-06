@@ -44,6 +44,11 @@ export default defineComponent({
         >
           Loading...
         </IButton>
+
+        <div class="abc">
+          hh
+          <span class="cde">cde</span>
+        </div>
       </div>
     )
   }
