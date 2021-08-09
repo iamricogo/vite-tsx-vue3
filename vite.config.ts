@@ -7,60 +7,78 @@
  */
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
+import { merge } from 'lodash'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx' //支持jsx写法
 import eslintPlugin from 'vite-plugin-eslint' //保存时执行eslint
 import viteStylelint from '@amatlash/vite-plugin-stylelint'
 import styleImport from 'vite-plugin-style-import' //组件按需引入
 
-export default defineConfig({
-  css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true
+export default defineConfig(({ mode }) => {
+  const base = {
+    css: {
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true
+        }
+      }
+    },
+    plugins: [
+      vue(),
+      vueJsx({ transformOn: true, enableObjectSlots: true }),
+      eslintPlugin({ fix: true }),
+      viteStylelint(),
+      styleImport({
+        libs: [
+          {
+            libraryName: 'ant-design-vue',
+            esModule: true,
+            ensureStyleFile: true,
+            resolveStyle: (name) => {
+              return `ant-design-vue/es/${name}/style/index.css`
+            }
+          },
+          {
+            libraryName: 'vant',
+            esModule: true,
+            resolveStyle: (name) => {
+              return `vant/es/${name}/style`
+            }
+          },
+          {
+            libraryName: 'element-plus',
+            esModule: true,
+            ensureStyleFile: true,
+            resolveStyle: (name) => {
+              name = name.slice(3)
+              return `element-plus/packages/theme-chalk/src/${name}.scss`
+            },
+            resolveComponent: (name) => {
+              return `element-plus/lib/${name}`
+            }
+          }
+        ]
+      })
+    ],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, '/src')
       }
     }
-  },
-  plugins: [
-    vue(),
-    vueJsx({ transformOn: true, enableObjectSlots: true }),
-    eslintPlugin({ fix: true }),
-    viteStylelint(),
-    styleImport({
-      libs: [
-        {
-          libraryName: 'ant-design-vue',
-          esModule: true,
-          ensureStyleFile: true,
-          resolveStyle: (name) => {
-            return `ant-design-vue/es/${name}/style/index`
-          }
-        },
-        {
-          libraryName: 'vant',
-          esModule: true,
-          resolveStyle: (name) => {
-            return `vant/es/${name}/style`
-          }
-        },
-        {
-          libraryName: 'element-plus',
-          esModule: true,
-          ensureStyleFile: true,
-          resolveStyle: (name) => {
-            name = name.slice(3)
-            return `element-plus/packages/theme-chalk/src/${name}.scss`
-          },
-          resolveComponent: (name) => {
-            return `element-plus/lib/${name}`
-          }
-        }
-      ]
-    })
-  ],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, '/src')
-    }
   }
+
+  if (mode === 'production') {
+    return merge({}, base, {
+      resolve: {
+        alias: {
+          'vue-types': resolve(
+            __dirname,
+            '/node_modules/vue-types/dist/shim.modern.js'
+          )
+        }
+      }
+    })
+  }
+
+  return base
 })

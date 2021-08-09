@@ -22,7 +22,7 @@
     "rxjs": "^7.3.0",
     "vant": "3.1.5",
     "vue": "^3.0.5",
-    "vue-types": "^4.0.1"
+    "vue-types": "^4.0.3"
   },
   "devDependencies": {
     "@amatlash/vite-plugin-stylelint": "^1.1.1",
