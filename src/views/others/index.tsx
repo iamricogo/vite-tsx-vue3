@@ -6,7 +6,7 @@ import IButton from '@/components/Button'
 
 import './style.css'
 
-export type IOthersProps = ExtractOutPropTypes<typeof iOthersProps>
+export type IOthersProps = ExtractPropTypesOut<typeof iOthersProps>
 
 const iOthersProps = {
   title: AppTypes.string.isRequired

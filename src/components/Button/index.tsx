@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import AppTypes, { func, oneOf } from '@/vue-types'
 import StringUtils from '@/utils/StringUtils'
 
-export type IButtonProps = ExtractOutPropTypes<typeof iButtonProps>
+export type IButtonProps = ExtractPropTypesOut<typeof iButtonProps>
 
 const iButtonProps = {
   nativeType: oneOf(['button', 'submit', 'reset'] as const).def('button'),

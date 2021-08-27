@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import AppTypes, { func } from '@/vue-types'
 import logo from '@/assets/logo.png'
 import style from './style.module.scss'
-export type IMeProps = ExtractOutPropTypes<typeof iMeProps>
+export type IMeProps = ExtractPropTypesOut<typeof iMeProps>
 
 export const iMeProps = {
   title: AppTypes.string.isRequired,
